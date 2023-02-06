@@ -1,0 +1,80 @@
+:root {
+    --status-draft-bg: #FBBC051A;
+    --status-draft-text: #FBBC05;
+}
+
+.wrapper {
+    position: relative;
+    border: 2px solid #D9D9D9;
+    border-radius: 10px;
+}
+
+.wrapper > * {
+    padding: 0 20px;
+}
+
+.header {
+    height: 20px;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-draft .header {
+    background: var(--status-draft-bg);
+}
+
+.status-created .header {
+    background: rgba(251, 188, 5, 0.1);
+}
+
+.status-expired .header {
+    background: rgba(234, 67, 53, 0.1);
+}
+
+.status-done {
+    background-color: #211231;
+}
+
+.status-deleted {
+    background-color: #fafafa;
+}
+
+.date-wrapper {
+    flex-basis: 20%;
+}
+
+.date-value {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--status-draft-text);
+}
+
+.title-wrapper {
+    flex-basis: 60%;
+}
+
+.title {
+    display: inline-block;
+    width: 100%;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: center;
+}
+
+.header-actions-wrapper {
+    flex-basis: 20%;
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 5px;
+    height: 12px;
+}
+
+.content {
+    padding: 20px;
+}
+
+.footer {
+
+}
