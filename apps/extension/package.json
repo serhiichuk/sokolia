@@ -1,0 +1,48 @@
+{
+  "scripts": {
+    "start": "ts-node-esm ./scripts/start.ts",
+    "build": "ts-node-esm ./scripts/build.ts",
+    "clean": "rimraf dist",
+    "build:v2": "tsc --noEmit && vite build --config vite/v2.config.ts",
+    "build:v3": "tsc --noEmit && vite build --config vite/v3.config.ts",
+    "dev:v2": "vite build --watch --config vite/v2.config.ts",
+    "dev:v3": "vite build --watch --config vite/v3.config.ts"
+  },
+  "type": "module",
+  "dependencies": {
+    "date-fns": "^2.29.3",
+    "domain": "workspace:../domain",
+    "infrastructure": "workspace:../infrastructure",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.7.0",
+    "webextension-polyfill": "^0.10.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.209",
+    "@types/node": "^18.13.0",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@types/webextension-polyfill": "^0.10.0",
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "@typescript-eslint/parser": "^5.48.2",
+    "@vitejs/plugin-react": "^3.0.1",
+    "autoprefixer": "^10.4.13",
+    "concurrently": "^7.6.0",
+    "eslint": "^8.32.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react": "^7.32.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "fs-extra": "^11.1.0",
+    "get-installed-browsers": "^0.1.7",
+    "postcss": "^8.4.21",
+    "rimraf": "^4.1.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.4",
+    "web-ext": "^7.4.0"
+  }
+}

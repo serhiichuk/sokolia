@@ -1,6 +1,9 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "target": "esnext",
+    "types": ["vite/client", "node"],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -16,9 +19,19 @@
     "importsNotUsedAsValues": "error",
     "strictPropertyInitialization": false,
     "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
     "paths": {
-      "domain/*": ["./packages/domain/src/*"],
-      "infrastructure/*": ["./packages/infrastructure/src/*"]
-    },
+      "@src/*": ["src/*"],
+      "@assets/*": ["src/assets/*"],
+      "@pages/*": ["src/pages/*"],
+    }
   },
+  "include": [
+    "src",
+    "utils",
+    "vite.config.ts",
+    "vite/make-manifest.ts",
+    "vite/copy-content-style.ts",
+  ]
 }
