@@ -38,6 +38,8 @@ export default function Home() {
 
 	return (
 		<div className={classes.wrapper}>
+			<pre className={classes.description}>File: <i>apps/playground/src/pages/Home.tsx</i></pre>
+
 			<div className={classes.popupBody}>
 				<NotesPopup
 					notes={notes}
