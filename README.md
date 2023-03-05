@@ -1,5 +1,7 @@
 # Sokolia
 
+https://www.figma.com/file/3NJBMjkgBzzWBKPkaWlTDw/Note-Organizer?node-id=0%3A1&t=K5pE2d71gVMKulqz-0
+
 ## Get Started 
 
 1. install `node.js` and `pnpm` if not installed
@@ -36,3 +38,8 @@
 - [ ] popup notes list (margins, animations)
 - [ ] popup notes item
 
+### Ops
+
+- [ ] Setup auto deploy playground on GitHub Pages 
+- [ ] Setup building extension
+- [ ] Setup linter and type checks
