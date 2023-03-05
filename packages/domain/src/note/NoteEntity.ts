@@ -1,4 +1,4 @@
-import type { BaseEntity } from '@/note/BaseEntity';
+import type { BaseEntity } from '../BaseEntity';
 
 export interface NoteEntity extends BaseEntity {
 	id: number

@@ -21,6 +21,6 @@
     "emitDecoratorMetadata": true,
     "importsNotUsedAsValues": "error"
   },
-  "include": ["src"],
+  "include": ["."],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

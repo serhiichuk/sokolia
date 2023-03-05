@@ -1,7 +1,7 @@
 {
-  "name": "playground",
+  "name": "@sokolia/playground",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,7 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "domain": "^0.0.1",
+    "@sokolia/domain": "workspace:^1.0.0",
+    "@sokolia/ioc": "workspace:^1.0.0",
+    "@sokolia/tools": "workspace:^1.0.0",
+    "@sokolia/ui": "workspace:^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -17,7 +20,8 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.1.0",
-    "typescript": "^4.9.3",
+    "postcss": "^8.4.21",
+    "postcss-nesting": "^11.2.1",
     "vite": "^4.1.0"
   }
 }

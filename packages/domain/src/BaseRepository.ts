@@ -1,4 +1,4 @@
-import type { BaseEntity } from '@/note/BaseEntity';
+import type { BaseEntity } from './BaseEntity';
 
 type BaseQuery = Record<string, string|number|boolean|null>;
 
@@ -9,8 +9,8 @@ export interface ReadableRepository<Entity extends BaseEntity, Query extends Bas
 }
 
 export interface WritableRepository<Entity extends BaseEntity, Query extends BaseQuery = never> {
-	create(entity: Entity): Promise<void>;
-	update(entity: Entity): Promise<void>;
+	create(entity: Partial<Entity>): Promise<Entity>;
+	update(entity: Partial<Entity> & { id: Entity['id'] }): Promise<Entity>;
 	delete(id: Entity['id']): Promise<void>;
 	delete(query: Entity['id']): Promise<void>;
 }

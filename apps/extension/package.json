@@ -11,8 +11,6 @@
   "type": "module",
   "dependencies": {
     "date-fns": "^2.29.3",
-    "domain": "workspace:../domain",
-    "infrastructure": "workspace:../infrastructure",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "reflect-metadata": "^0.1.13",
