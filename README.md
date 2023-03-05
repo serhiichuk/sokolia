@@ -6,6 +6,13 @@
 2. install packages by running `pnpm install`
 3. start develop by running `pnpm --filter playground dev`
 
+## Publish changes
+
+1. Create new branch
+2. Commit your changes and push
+3. Create Pull Request
+4. Review and merge
+
 ## TODO
 
 ### Editor
