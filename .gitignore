@@ -142,6 +142,7 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
+dist
 
 # Gatsby files
 .cache/
@@ -380,7 +381,7 @@ $RECYCLE.BIN/
 /coverage
 
 # build
-#/dist
+/dist
 
 # etc
 .idea
