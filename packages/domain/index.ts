@@ -1,2 +1,1 @@
-export { NoteEntity } from './src/note/NoteEntity'
-export { NoteRepository } from './src/note/NoteRepository'
+export type { NoteEntity } from './src/note/NoteEntity'
