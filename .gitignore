@@ -381,7 +381,7 @@ $RECYCLE.BIN/
 /coverage
 
 # build
-/dist
+dist
 
 # etc
 .idea

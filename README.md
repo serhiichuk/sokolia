@@ -48,6 +48,6 @@ https://www.figma.com/file/3NJBMjkgBzzWBKPkaWlTDw/Note-Organizer?node-id=0%3A1&t
 
 ### Ops
 
-- [ ] Setup auto deploy playground on GitHub Pages 
+- [x] Setup auto deploy playground on GitHub Pages 
 - [ ] Setup building extension
 - [ ] Setup linter and type checks
