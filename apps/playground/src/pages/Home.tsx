@@ -1,15 +1,15 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import classes from './Home.module.pcss'
 import { NotesPopup } from '@sokolia/ui';
 import { resolve } from '@sokolia/ioc';
 import { NODES_REPOSITORY_KEY } from '../ioc/notesRepository';
-import type { NoteEntity, NotesQuery } from '@sokolia/domain';
+import type { NoteEntity } from '@sokolia/domain';
 
 export default function Home() {
 	const notesRepo = resolve(NODES_REPOSITORY_KEY);
 
 	const [searchText, setSearchText] = useState('');
-	const [notes, setNotes] = useState<NoteEntity[]>( []);
+	const [notes, setNotes] = useState<NoteEntity[]>([]);
 
 	const syncNotes = () => {
 		console.log('Synchronizing notes %s...', searchText);
