@@ -1,6 +1,6 @@
-import type { BaseEntity } from '../BaseEntity';
+import type { Repository } from '../Repository';
 
-export interface NoteEntity extends BaseEntity {
+export type NoteEntity = {
 	id: number
 	title: string
 	createdAt: number
@@ -9,3 +9,9 @@ export interface NoteEntity extends BaseEntity {
 	status: 'draft' | 'created' | 'expired' | 'done' | 'deleted'
 	content: string
 }
+
+export type NotesQuery = {
+	searchText: string
+}
+
+export type NotesRepository = Repository<NoteEntity, NotesQuery>
