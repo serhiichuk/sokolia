@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import classes from './Home.module.pcss'
 import { NotesPopup } from '@sokolia/ui';
 import { resolve } from '@sokolia/ioc';
@@ -9,7 +9,7 @@ export default function Home() {
 	const notesRepo = resolve(NODES_REPOSITORY_KEY);
 
 	const [searchText, setSearchText] = useState('');
-	const [notes, setNotes] = useState<NoteEntity[]>( [] );
+	const [notes, setNotes] = useState<NoteEntity[]>( []);
 
 	const syncNotes = () => {
 		console.log('Synchronizing notes %s...', searchText);
@@ -20,9 +20,7 @@ export default function Home() {
 			.catch(e => console.error('Failed to sync notes', e));
 	};
 
-	useEffect(() => {
-		syncNotes();
-	}, [searchText])
+	useEffect(syncNotes, [searchText])
 
 	const onCreateNote = async (data: Partial<NoteEntity>) => {
 		await notesRepo.create(data);
@@ -37,11 +35,6 @@ export default function Home() {
 	const onDeleteNote = async (id: NoteEntity['id']) => {
 		await notesRepo.delete(id);
 		await syncNotes();
-	}
-
-	const onChangeSearchText = async (searchText: string) => {
-		const notes = await notesRepo.findMany({ searchText });
-		setNotes(notes);
 	}
 
 	return (

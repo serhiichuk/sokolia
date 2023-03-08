@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, ChangeEventHandler } from 'react';
 import classes from './NotesPopup.module.pcss';
 import iconLoop from '../assets/img/icon-loop-20.svg';
 import iconTrash from '../assets/img/icon-trash-20.svg';
@@ -17,9 +17,10 @@ type Props = {
 
 export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, onChangeSearchText }: Props) => {
 	const [searchText, setSearchText] = useState('');
-	useEffect(() => {
-		onChangeSearchText(searchText)
-	}, [searchText]);
+	const handleChangeSearchText: ChangeEventHandler<HTMLInputElement> = (e) => {
+		setSearchText(e.target.value);
+		onChangeSearchText(e.target.value);
+	}
 
 	return (
 		<div className={classes.wrapper}>
@@ -29,7 +30,7 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 					<input
 						type="text"
 						value={searchText}
-						onChange={e => setSearchText(e.target.value)}
+						onChange={handleChangeSearchText}
 					/>
 				</div>
 				<div className={classes.actionsBlock}>
