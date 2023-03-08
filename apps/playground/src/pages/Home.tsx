@@ -3,15 +3,18 @@ import classes from './Home.module.pcss'
 import { NotesPopup } from '@sokolia/ui';
 import { resolve } from '@sokolia/ioc';
 import { NODES_REPOSITORY_KEY } from '../ioc/notesRepository';
-import type { NoteEntity } from '@sokolia/domain';
+import type { NoteEntity, NotesQuery } from '@sokolia/domain';
 
 export default function Home() {
 	const notesRepo = resolve(NODES_REPOSITORY_KEY);
-	const [notes, setNotes] = useState<NoteEntity[]>( [] );
-	const syncNotes = () => {
-		console.log('Synchronizing notes...');
 
-		return notesRepo.findAll()
+	const [searchText, setSearchText] = useState('');
+	const [notes, setNotes] = useState<NoteEntity[]>( [] );
+
+	const syncNotes = () => {
+		console.log('Synchronizing notes %s...', searchText);
+
+		(searchText ? notesRepo.findMany({ searchText }) : notesRepo.findAll())
 			.then(setNotes)
 			.then(() => console.log('Synchronized notes'))
 			.catch(e => console.error('Failed to sync notes', e));
@@ -19,7 +22,7 @@ export default function Home() {
 
 	useEffect(() => {
 		syncNotes();
-	}, []);
+	}, [searchText])
 
 	const onCreateNote = async (data: Partial<NoteEntity>) => {
 		await notesRepo.create(data);
@@ -36,6 +39,11 @@ export default function Home() {
 		await syncNotes();
 	}
 
+	const onChangeSearchText = async (searchText: string) => {
+		const notes = await notesRepo.findMany({ searchText });
+		setNotes(notes);
+	}
+
 	return (
 		<div className={classes.wrapper}>
 			<pre className={classes.description}>File: <i>apps/playground/src/pages/Home.tsx</i></pre>
@@ -46,6 +54,7 @@ export default function Home() {
 					onCreateNote={onCreateNote}
 					onUpdateNote={onUpdateNote}
 					onDeleteNote={onDeleteNote}
+					onChangeSearchText={setSearchText}
 				/>
 			</div>
 		</div>
