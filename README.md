@@ -8,6 +8,14 @@ https://www.figma.com/file/3NJBMjkgBzzWBKPkaWlTDw/Note-Organizer?node-id=0%3A1&t
 2. install packages by running `pnpm install`
 3. start develop by running `pnpm --filter playground dev`
 
+## Commands
+
+### Playground
+
+`pnpm --filter playground dev` - Start development server for playground
+
+`pnpm --filter playground build` - Build playground for deploy
+
 ## Publish changes
 
 1. Create new branch
