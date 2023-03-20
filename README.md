@@ -34,7 +34,7 @@ https://www.figma.com/file/3NJBMjkgBzzWBKPkaWlTDw/Note-Organizer?node-id=0%3A1&t
 ### Notes List
 
 - [ ] Edit screen when creating a new note
-- [ ] Search by text
+- [x] Search by text
 - [x] Sorting
 - [ ] Filter by type
 
@@ -50,4 +50,5 @@ https://www.figma.com/file/3NJBMjkgBzzWBKPkaWlTDw/Note-Organizer?node-id=0%3A1&t
 
 - [x] Setup auto deploy playground on GitHub Pages 
 - [ ] Setup building extension
-- [ ] Setup linter and type checks
+- [x] Setup linter
+- [ ] Setup type checks
