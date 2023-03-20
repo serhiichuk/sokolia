@@ -1,5 +1,5 @@
 {
-  "name": "@sokolia/tools",
+  "name": "@sokolia/framework",
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {

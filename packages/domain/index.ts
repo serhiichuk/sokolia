@@ -1,1 +1,1 @@
-export type { NoteEntity, NotesQuery, NotesRepository } from './src/note/NoteEntity'
+export type { NoteEntity, NotesRepository } from './src/note/NoteEntity'

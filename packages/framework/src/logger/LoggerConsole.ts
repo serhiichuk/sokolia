@@ -1,6 +1,6 @@
-import type { ILogger } from './ILogger';
+import type { Logger } from './Logger';
 
-export class LoggerConsole implements ILogger {
+export class LoggerConsole implements Logger {
 	info(message: string, ...args: unknown[]): void {
 		console.info(message, ...args);
 	}

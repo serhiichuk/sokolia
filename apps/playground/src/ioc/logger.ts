@@ -1,4 +1,4 @@
 import { register } from '@sokolia/ioc';
-import { ILogger, LoggerConsole } from '@sokolia/tools';
+import { Logger, LoggerConsole } from '@sokolia/framework';
 
-export const LOGGER_KEY = register<ILogger>(LoggerConsole);
+export const LOGGER_KEY = register<Logger>(LoggerConsole);

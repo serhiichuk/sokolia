@@ -4,11 +4,11 @@ importers:
 
   .:
     specifiers:
-      '@types/node': ^18.14.6
-      typescript: ^4.9.3
+      '@types/node': ^18.15.3
+      typescript: ^5.0.2
     devDependencies:
-      '@types/node': 18.14.6
-      typescript: 4.9.5
+      '@types/node': 18.15.3
+      typescript: 5.0.2
 
   apps/extension:
     specifiers:
@@ -81,8 +81,8 @@ importers:
   apps/playground:
     specifiers:
       '@sokolia/domain': workspace:^1.0.0
+      '@sokolia/framework': workspace:^1.0.0
       '@sokolia/ioc': workspace:^1.0.0
-      '@sokolia/tools': workspace:^1.0.0
       '@sokolia/ui': workspace:^1.0.0
       '@types/react': ^18.0.27
       '@types/react-dom': ^18.0.10
@@ -94,8 +94,8 @@ importers:
       vite: ^4.1.0
     dependencies:
       '@sokolia/domain': link:../../packages/domain
+      '@sokolia/framework': link:../../packages/framework
       '@sokolia/ioc': link:../../packages/ioc
-      '@sokolia/tools': link:../../packages/tools
       '@sokolia/ui': link:../../packages/ui
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -108,6 +108,12 @@ importers:
       vite: 4.1.1
 
   packages/domain:
+    specifiers:
+      '@sokolia/framework': workspace:^1.0.0
+    dependencies:
+      '@sokolia/framework': link:../framework
+
+  packages/framework:
     specifiers: {}
 
   packages/ioc:
@@ -117,9 +123,6 @@ importers:
     dependencies:
       reflect-metadata: 0.1.13
       tsyringe: 4.7.0
-
-  packages/tools:
-    specifiers: {}
 
   packages/ui:
     specifiers:
@@ -813,6 +816,10 @@ packages:
 
   /@types/node/18.14.6:
     resolution: {integrity: sha512-93+VvleD3mXwlLI/xASjw0FzKcwzl3OdTCzm1LaRfqgS21gfFtK3zDXM5Op9TeeMsJVOaJ2VRDpT9q4Y3d0AvA==}
+    dev: true
+
+  /@types/node/18.15.3:
+    resolution: {integrity: sha512-p6ua9zBxz5otCmbpb5D3U4B5Nanw6Pk3PPyX05xnxbB/fRv71N7CPmORg7uAD5P70T0xmx1pzAx/FUfa5X+3cw==}
     dev: true
 
   /@types/prop-types/15.7.5:
@@ -4863,6 +4870,12 @@ packages:
   /typescript/4.9.5:
     resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
     engines: {node: '>=4.2.0'}
+    hasBin: true
+    dev: true
+
+  /typescript/5.0.2:
+    resolution: {integrity: sha512-wVORMBGO/FAs/++blGNeAVdbNKtIh1rbBL2EyQ1+J9lClJ93KiiKe8PmFIVdXhHcyv44SL9oglmfeSsndo0jRw==}
+    engines: {node: '>=12.20'}
     hasBin: true
     dev: true
 

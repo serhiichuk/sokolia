@@ -33,9 +33,9 @@ https://www.figma.com/file/3NJBMjkgBzzWBKPkaWlTDw/Note-Organizer?node-id=0%3A1&t
 
 ### Notes List
 
-- [ ] Editing screen when creating a new note
+- [ ] Edit screen when creating a new note
 - [ ] Search by text
-- [ ] Sorting
+- [x] Sorting
 - [ ] Filter by type
 
 ### Styling

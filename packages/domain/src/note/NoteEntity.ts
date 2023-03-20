@@ -1,6 +1,6 @@
-import type { Repository } from '../Repository';
+import type { Entity, Repository } from '@sokolia/framework';
 
-export type NoteEntity = {
+export interface NoteEntity extends Entity {
 	id: number
 	title: string
 	createdAt: number
@@ -10,8 +10,6 @@ export type NoteEntity = {
 	content: string
 }
 
-export type NotesQuery = {
-	searchText: string
+export interface NotesRepository extends Repository<NoteEntity> {
+	findBySearchText(searchText: string): Promise<NoteEntity[]>
 }
-
-export type NotesRepository = Repository<NoteEntity, NotesQuery>

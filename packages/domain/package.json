@@ -4,5 +4,8 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@sokolia/framework": "workspace:^1.0.0"
   }
 }

@@ -11,7 +11,7 @@
   "dependencies": {
     "@sokolia/domain": "workspace:^1.0.0",
     "@sokolia/ioc": "workspace:^1.0.0",
-    "@sokolia/tools": "workspace:^1.0.0",
+    "@sokolia/framework": "workspace:^1.0.0",
     "@sokolia/ui": "workspace:^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

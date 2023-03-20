@@ -4,6 +4,7 @@ import { NotesPopup } from '@sokolia/ui';
 import { resolve } from '@sokolia/ioc';
 import { NODES_REPOSITORY_KEY } from '../ioc/notesRepository';
 import type { NoteEntity } from '@sokolia/domain';
+import { now } from '../utils';
 
 export default function Home() {
 	const notesRepo = resolve(NODES_REPOSITORY_KEY);
@@ -14,7 +15,7 @@ export default function Home() {
 	const syncNotes = () => {
 		console.log('Synchronizing notes %s...', searchText);
 
-		(searchText ? notesRepo.findMany({ searchText }) : notesRepo.findAll())
+		notesRepo.findBySearchText(searchText)
 			.then(setNotes)
 			.then(() => console.log('Synchronized notes'))
 			.catch(e => console.error('Failed to sync notes', e));
@@ -23,12 +24,20 @@ export default function Home() {
 	useEffect(syncNotes, [searchText])
 
 	const onCreateNote = async (data: Partial<NoteEntity>) => {
-		await notesRepo.create(data);
+		await notesRepo.create({
+			title: data.title || '',
+			content: data.content || '',
+			status: data.status || 'draft',
+			createdAt: now(),
+		});
 		await syncNotes();
 	};
 
 	const onUpdateNote = async (data: Partial<NoteEntity> & { id: NoteEntity['id'] }) => {
-		await notesRepo.update(data);
+		await notesRepo.update({
+			...data,
+			updatedAt: now(),
+		});
 		await syncNotes();
 	}
 
