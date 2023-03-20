@@ -21,8 +21,5 @@
   "rules": {
     "react/react-in-jsx-scope": "off"
   },
-  "globals": {
-    "chrome": "readonly"
-  },
-  "ignorePatterns": ["watch.js", "dist/**"]
+  "ignorePatterns": ["dist"]
 }

@@ -1,8 +1,9 @@
 import 'reflect-metadata';
-import { container, inject as _inject, injectable } from 'tsyringe';
+import { container, injectable } from 'tsyringe';
 
 type Constructor<T> = { new (...args: any[]): T }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface InjectionToken<T> extends Symbol {}
 
 // export const inject = _inject as <T>(key: InjectionToken<T>) => (target: any, propertyKey: (string | symbol), parameterIndex: number) => any

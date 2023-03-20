@@ -5,10 +5,15 @@
   "license": "MIT",
   "packageManager": "pnpm@7.27.0",
   "scripts": {
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "lint-eslint": "eslint . --ext js,jsx,ts,tsx",
+    "lint": "pnpm run lint-eslint"
   },
   "devDependencies": {
     "@types/node": "^18.15.3",
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
+    "eslint": "^8.36.0",
     "typescript": "^5.0.2"
   }
 }

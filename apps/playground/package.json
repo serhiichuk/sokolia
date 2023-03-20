@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint:js": "eslint ."
   },
   "dependencies": {
     "@sokolia/domain": "workspace:^1.0.0",
