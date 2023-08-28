@@ -1,6 +1,7 @@
 # Sokolia
 
-https://www.figma.com/file/3NJBMjkgBzzWBKPkaWlTDw/Note-Organizer?node-id=0%3A1&t=K5pE2d71gVMKulqz-0
+Design - https://www.figma.com/file/3NJBMjkgBzzWBKPkaWlTDw/Note-Organizer?node-id=0%3A1&t=K5pE2d71gVMKulqz-0
+Demo - https://serhiichuk.github.io/sokolia
 
 ## Get Started 
 
