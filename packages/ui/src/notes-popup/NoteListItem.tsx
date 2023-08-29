@@ -96,7 +96,7 @@ const NoteListItem = (props: Props) => {
 
         <footer className={classes.footer}>
           {(props.note.createdAt && <span>Created {format(props.note.createdAt, 'dd MMM')}</span>)}
-          {(props.note.updatedAt && <span>/ Updated {format(props.note.updatedAt, 'dd MMM')}</span>)}
+          {(props.note.updatedAt && <span>Updated {format(props.note.updatedAt, 'dd MMM')}</span>)}
         </footer>
       </div>
   );
