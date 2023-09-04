@@ -2,6 +2,9 @@ import type { KeyboardEventHandler, ChangeEventHandler } from 'react';
 import { useState } from 'react';
 import classes from './NoteContentEditor.module.pcss'
 
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 import { ClickOutside } from './ClickOutside';
 
 type Props = {
@@ -31,6 +34,7 @@ const NoteContentEditor = (props: Props) => {
 
   return (
      <ClickOutside onClickOutside={handleClickOutside}>
+      <ReactQuill theme="snow" value={value} onChange={setValue} />;
         <textarea
             className={classes.input}
             value={value}
