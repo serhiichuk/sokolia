@@ -7,6 +7,20 @@ import 'react-quill/dist/quill.snow.css';
 
 import { ClickOutside } from './ClickOutside';
 
+const modules = {
+  toolbar: [
+    [],
+    ["bold", "italic", "underline"],
+    [
+      { list: 'ordered' },
+      { list: 'bullet' },
+
+    ],
+    [{ 'align': [] }],
+    ["image"],
+  ]
+}
+
 type Props = {
   content?: string,
   onInput?: (val: string) => void
@@ -15,14 +29,20 @@ type Props = {
 
 const NoteContentEditor = (props: Props) => {
   const [value, setValue] = useState(props.content || '');
+
   const submit = () => {
     if (props.content !== value) props.onChange(value);
   }
-  const handleChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
-    setValue(e.target.value.trim());
+
+  const handleChange = (content: string) => {
+    setValue(content);
   };
 
-  const handleKeyUp: KeyboardEventHandler<HTMLTextAreaElement> = (e ) => {
+  // const handleChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
+  //   setValue(e.target.value.trim());
+  // };
+
+  const handleKeyUp: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
     switch (e.key) {
       case 'Enter': submit();
     }
@@ -33,15 +53,24 @@ const NoteContentEditor = (props: Props) => {
   }
 
   return (
-     <ClickOutside onClickOutside={handleClickOutside}>
-      <ReactQuill theme="snow" value={value} onChange={setValue} />;
-        <textarea
-            className={classes.input}
-            value={value}
-            onKeyUp={handleKeyUp}
-            onChange={handleChange}
+    <ClickOutside onClickOutside={handleClickOutside}>
+      <div className={classes.input}>
+        <ReactQuill
+          value={value}
+          onChange={handleChange}
+          theme="snow"
+          onKeyUp={handleKeyUp}
+          modules={modules}
         />
-     </ClickOutside>
+      </div>
+      {/* <textarea
+        className={classes.input}
+        value={value}
+        onKeyUp={handleKeyUp}
+        onChange={handleChange}
+      /> */}
+    </ClickOutside>
+
   );
 }
 
