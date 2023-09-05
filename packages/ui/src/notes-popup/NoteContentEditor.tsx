@@ -38,10 +38,6 @@ const NoteContentEditor = (props: Props) => {
     setValue(content);
   };
 
-  // const handleChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
-  //   setValue(e.target.value.trim());
-  // };
-
   const handleKeyUp: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
     switch (e.key) {
       case 'Enter': submit();
@@ -63,12 +59,6 @@ const NoteContentEditor = (props: Props) => {
           modules={modules}
         />
       </div>
-      {/* <textarea
-        className={classes.input}
-        value={value}
-        onKeyUp={handleKeyUp}
-        onChange={handleChange}
-      /> */}
     </ClickOutside>
 
   );
