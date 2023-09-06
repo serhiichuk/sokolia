@@ -4,6 +4,7 @@ import classes from './NoteContentEditor.module.pcss'
 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import ReactMarkdown from 'react-markdown'
 
 import { ClickOutside } from './ClickOutside';
 
@@ -14,13 +15,11 @@ const modules = {
     [
       { list: 'ordered' },
       { list: 'bullet' },
-
     ],
-    [{ 'align': [] }],
+    [{ align: '' }, { align: 'center' }],
     ["image"],
   ]
 }
-
 type Props = {
   content?: string,
   onInput?: (val: string) => void
@@ -50,17 +49,21 @@ const NoteContentEditor = (props: Props) => {
 
   return (
     <ClickOutside onClickOutside={handleClickOutside}>
-      <div className={classes.input}>
+
         <ReactQuill
           value={value}
           onChange={handleChange}
           theme="snow"
-          onKeyUp={handleKeyUp}
+          // onKeyUp={handleKeyUp}
           modules={modules}
+          style={{
+            backgroundColor: '#ffffff',
+            color: '#000000',
+            
+          }}
         />
-      </div>
-    </ClickOutside>
 
+    </ClickOutside>
   );
 }
 

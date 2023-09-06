@@ -1,5 +1,7 @@
-const NoteContentView = (props: { content?: string }) => (
-	<span dangerouslySetInnerHTML={{__html: props.content}}></span>
-)
+const NoteContentView = (props: { content?: string }) => {
+	return (
+		<span dangerouslySetInnerHTML={{ __html: props.content }}></span>
+	)
+}
 
 export default NoteContentView;

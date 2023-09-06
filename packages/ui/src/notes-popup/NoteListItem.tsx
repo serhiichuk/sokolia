@@ -5,13 +5,12 @@ import iconTrash12 from '../assets/img/icon-trash-12.svg';
 import iconCheck from '../assets/img/icon-check-green.svg';
 
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-import format from 'date-fns/format'
 
 import type { NoteEntity } from '@sokolia/domain';
 
 import NoteContentView from './NoteContentView';
 import NoteContentEditor from './NoteContentEditor';
-
+import { NoteDate } from './NoteDate';
 
 export type Mode = 'view' | 'edit';
 export type Props = {
@@ -27,8 +26,11 @@ export type Props = {
 const TIME_LEFT_SYNC_INTERVAL = 1000;
 
 const NoteListItem = (props: Props) => {
+  const [active, setActive] = useState(() => {
+    const storedActive = localStorage.getItem(`buttonActive_${props.note.id}`);
+    return storedActive ? JSON.parse(storedActive) : false;
+  });
   const [timeLeft, setTimeLeft] = useState<string>(props.note.expiredAt ? formatDistanceToNow(props.note.expiredAt) : '');
-
 
   useEffect(() => {
     if (props.note.expiredAt) {
@@ -68,8 +70,16 @@ const NoteListItem = (props: Props) => {
     if (props.note.id) await props.onDeleteNote(props.note.id)
   }
 
+   const changeBackground =()=>{
+     setActive(!active);
+    }
+
+    useEffect(() => {
+      localStorage.setItem(`buttonActive_${props.note.id}`, JSON.stringify(active));
+    }, [active, props.note.id]);
+
   return (
-    <div className={`${classes.wrapper} ${statusClassName()}`}>
+    <div style={{ backgroundColor: active ? "#E5F5F4" : '' }} className={`${classes.wrapper} ${statusClassName()}`}>
       <header className={classes.header}>
         <div className={classes.dateWrapper}>
           <span className={classes.dateValue}>{timeLeft}</span>
@@ -80,8 +90,8 @@ const NoteListItem = (props: Props) => {
         </div>
 
         <div className={classes.headerActionsWrapper}>
-          <img src={iconPen12} onClick={handleClickEditAction}></img>
-          <img src={iconTrash12} onClick={handleClickDeleteAction}></img>
+          <img className={classes.headerIconPen} src={iconPen12} onClick={handleClickEditAction}></img>
+          <img className={classes.headerIconThrash} src={iconTrash12} onClick={handleClickDeleteAction}></img>
         </div>
       </header>
 
@@ -98,14 +108,12 @@ const NoteListItem = (props: Props) => {
       </main>
 
       <footer className={classes.footer}>
-        {(props.note.createdAt && <span>Created {format(props.note.createdAt, 'dd MMM')}</span>)}
-        {(props.note.updatedAt && <span>Updated {format(props.note.updatedAt, 'dd MMM')}</span>)}
-
-        <button className={classes.mark}>
+        <NoteDate date={props.note.createdAt} prefix="Created" formatString="dd MMM"/>
+        <NoteDate date={props.note.updatedAt} prefix="Update" formatString="dd MMM"/>
+        <button className={classes.mark} onClick={changeBackground}>
           <span>Mark as Done </span>
           <img src={iconCheck} className={classes.markIcon} />
         </button>
-
       </footer>
     </div>
   );

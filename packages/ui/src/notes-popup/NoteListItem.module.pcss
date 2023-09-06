@@ -27,7 +27,6 @@
 }
 
 .status-draft .header {
-    background: var(--status-draft-bg);
 }
 
 .status-created .header {
@@ -76,8 +75,39 @@
     height: 12px;
 }
 
+.header-icon-pen{
+    width: 15px;
+    height: 15px;
+    padding: 5px;
+}
+
+.header-icon-thrash{
+    margin-left: 5px;
+    width: 15px;
+    height: 15px;
+    padding: 5px;
+}
+
+.header-icon-pen:hover{
+    background: #9a9afc;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #888;
+    transition: .4s;
+}
+
+.header-icon-thrash:hover{
+    background: #ff5757;
+    padding: 5px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 5px 5px 5px #888;
+    transition: .4s;
+}
+
 .content {
-    padding: 20px;
+    padding: 25px;
 }
 
 .footer {
@@ -94,7 +124,7 @@
 .mark{
     display: flex;
     border: none;
-    background-color: white;
+    background-color: transparent;
     cursor: pointer;
     color: var(--green, #7FCCC6);
     font-size: 12px;
