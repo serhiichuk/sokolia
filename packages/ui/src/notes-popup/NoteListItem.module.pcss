@@ -9,6 +9,11 @@
     border-radius: 10px;
 }
 
+.span {
+    margin-left: 30px;
+}
+
+
 .wrapper > * {
     padding: 0 20px;
 }
@@ -22,7 +27,6 @@
 }
 
 .status-draft .header {
-    background: var(--status-draft-bg);
 }
 
 .status-created .header {
@@ -71,10 +75,63 @@
     height: 12px;
 }
 
+.header-icon-pen{
+    width: 15px;
+    height: 15px;
+    padding: 5px;
+}
+
+.header-icon-thrash{
+    margin-left: 5px;
+    width: 15px;
+    height: 15px;
+    padding: 5px;
+}
+
+.header-icon-pen:hover{
+    background: #9a9afc;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #888;
+    transition: .4s;
+}
+
+.header-icon-thrash:hover{
+    background: #ff5757;
+    padding: 5px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 5px 5px 5px #888;
+    transition: .4s;
+}
+
 .content {
-    padding: 20px;
+    padding: 25px;
 }
 
 .footer {
+    justify-content: space-between;
+    display: flex;
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    color: var(--grey-header, #A8A8A8);
+}
 
+.mark{
+    display: flex;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--green, #7FCCC6);
+    font-size: 12px;
+    align-items: center;
+    font-family: Montserrat;
+}
+
+.markIcon{
+    margin-left: 10px
 }
