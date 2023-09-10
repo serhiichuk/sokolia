@@ -29,7 +29,7 @@ Demo - https://serhiichuk.github.io/sokolia
 
 ### Editor
 
-- [ ] markdown support
+- [x] markdown support
 - [ ] media elements support
 - [ ] draw support
 
@@ -51,6 +51,7 @@ Demo - https://serhiichuk.github.io/sokolia
 ### Ops
 
 - [x] Setup auto deploy playground on GitHub Pages 
+- [ ] Setup auto deploy playground on GitHub Pages for PRs
 - [ ] Setup building extension
 - [x] Setup linter
-- [ ] Setup type checks
+- [x] Setup type checks
