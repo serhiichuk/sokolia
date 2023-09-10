@@ -6,7 +6,7 @@ import { NODES_REPOSITORY_KEY } from '../ioc/notesRepository';
 import type { NoteEntity } from '@sokolia/domain';
 import { now } from '../utils';
 
-export default function Home() {
+export const Home = () => {
 	const notesRepo = resolve(NODES_REPOSITORY_KEY);
 
 	const [searchText, setSearchText] = useState('');
@@ -30,7 +30,7 @@ export default function Home() {
 			status: data.status || 'draft',
 			createdAt: now(),
 		});
-		await syncNotes();
+		syncNotes();
 	};
 
 	const onUpdateNote = async (data: Partial<NoteEntity> & { id: NoteEntity['id'] }) => {
@@ -38,12 +38,12 @@ export default function Home() {
 			...data,
 			updatedAt: now(),
 		});
-		await syncNotes();
+		syncNotes();
 	}
 
 	const onDeleteNote = async (id: NoteEntity['id']) => {
 		await notesRepo.delete(id);
-		await syncNotes();
+		syncNotes();
 	}
 
 	return (

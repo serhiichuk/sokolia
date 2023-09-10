@@ -1,11 +1,12 @@
-import React, { useState, ChangeEventHandler } from 'react';
+import type { ChangeEventHandler } from 'react';
+import React, { useState } from 'react';
 import classes from './NotesPopup.module.pcss';
 import iconLoop from '../assets/img/icon-loop-20.svg';
 import iconTrash from '../assets/img/icon-trash-20.svg';
 import iconCheck from '../assets/img/icon-check-20.svg';
 
 import type { NoteEntity } from '@sokolia/domain';
-import NotesList from './NotesList';
+import { NotesList } from './NotesList';
 
 type Props = {
 	notes: NoteEntity[];
@@ -20,6 +21,13 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 	const handleChangeSearchText: ChangeEventHandler<HTMLInputElement> = (e) => {
 		setSearchText(e.target.value);
 		onChangeSearchText(e.target.value);
+	}
+
+	const handleCreateNote = () => {
+		onCreateNote({
+			title: 'test',
+			content: 'test test',
+		}).catch(e => console.error('Failed to create note', e));
 	}
 
 	return (
@@ -45,9 +53,9 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 
 			<main className={classes.notesWrapper}>
 				<div className={classes.createBox}>
-				<div className={classes.createBtn}
-					onClick={() => onCreateNote({title: 'test', content: 'test test'})}
-				></div>
+					<div className={classes.createBtn}
+						onClick={handleCreateNote}
+					></div>
 				</div>
 				<NotesList
 					notes={notes}

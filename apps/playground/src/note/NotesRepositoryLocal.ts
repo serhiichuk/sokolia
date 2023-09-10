@@ -12,15 +12,6 @@ const isSortCriteria = (criteria: Pageable | Sort): criteria is Sort => !isPagea
 
 export class NotesRepositoryLocal implements NotesRepository {
 	private readonly storageKey = 'notes';
-	private readonly entityFactory = (data: any): NoteEntity => ({
-		id: data.id,
-		title: data.title,
-		content: data.content,
-		status: data.status,
-		createdAt: data.createdAt,
-		updatedAt: data.updatedAt,
-		expiredAt: data.expiredAt,
-	})
 
 	async findBySearchText(searchText: string): Promise<NoteEntity[]> {
 		const notes = await this.findAll({createdAt: SortDirection.Desc});
@@ -123,16 +114,17 @@ export class NotesRepositoryLocal implements NotesRepository {
 
 	private getNextId(entities: NoteEntity[]): number {
 		const lastEntity = entities[entities.length - 1];
-		return lastEntity ? lastEntity.id as number + 1 : 1;
+		return lastEntity ? lastEntity.id  + 1 : 1;
 	}
 
-	private async getEntitiesFromStorage(): Promise<NoteEntity[]> {
+	private getEntitiesFromStorage(): Promise<NoteEntity[]> {
 		const entitiesJson = localStorage.getItem(this.storageKey) || '[]';
-		return JSON.parse(entitiesJson).map(this.entityFactory);
+		return Promise.resolve(JSON.parse(entitiesJson) as NoteEntity[])
 	}
 
-	private async saveEntitiesToStorage(entities: NoteEntity[]): Promise<void> {
+	private saveEntitiesToStorage(entities: NoteEntity[]): Promise<void> {
 		const entitiesJson = JSON.stringify(entities);
-		localStorage.setItem(this.storageKey, entitiesJson);
+		localStorage.setItem(this.storageKey, entitiesJson)
+		return Promise.resolve();
 	}
 }

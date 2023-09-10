@@ -1,11 +1,12 @@
-import { useRef, useEffect, ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import { useRef, useEffect } from 'react';
 
 interface ClickOutsideProps {
 	children: ReactNode;
 	onClickOutside: () => void;
 }
 
-export function ClickOutside({ children, onClickOutside }: ClickOutsideProps) {
+export const ClickOutside = ({ children, onClickOutside }: ClickOutsideProps) => {
 	const wrapperRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -15,11 +16,11 @@ export function ClickOutside({ children, onClickOutside }: ClickOutsideProps) {
 			}
 		};
 
-		document.addEventListener("mousedown", handleClickOutside);
+		document.addEventListener('mousedown', handleClickOutside);
 		return () => {
-			document.removeEventListener("mousedown", handleClickOutside);
+			document.removeEventListener('mousedown', handleClickOutside);
 		};
 	}, [wrapperRef, onClickOutside]);
 
 	return <div ref={wrapperRef}>{children}</div>;
-}
+};
