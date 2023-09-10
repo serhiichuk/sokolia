@@ -8,7 +8,7 @@
     "preinstall": "npx only-allow pnpm",
     "lint-eslint": "eslint . --ext js,jsx,ts,tsx",
     "lint": "pnpm run lint-eslint",
-    "typecheck": "tsc --noEmit -p tsconfig.base.json"
+    "type-check": "tsc --noEmit -p tsconfig.base.json"
   },
   "devDependencies": {
     "@types/node": "^18.17.15",
