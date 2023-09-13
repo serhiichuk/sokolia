@@ -3,6 +3,7 @@ import classes from './NoteListItem.module.pcss';
 import iconPen12 from '../assets/img/icon-pen-12.svg';
 import iconTrash12 from '../assets/img/icon-trash-12.svg';
 import iconCheck from '../assets/img/icon-check-green.svg';
+import iconCheckActive from '../assets/img/icon-check-green-active.svg'
 
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
@@ -31,6 +32,10 @@ const NoteListItem = (props: Props) => {
     return storedActive ? JSON.parse(storedActive) : false;
   });
   const [timeLeft, setTimeLeft] = useState<string>(props.note.expiredAt ? formatDistanceToNow(props.note.expiredAt) : '');
+  const [isMarkedDone, setIsMarkedDone] = useState(() => {
+    const storedMarkedDone = localStorage.getItem(`buttonMarkedDone_${props.note.id}`);
+    return storedMarkedDone ? JSON.parse(storedMarkedDone) : false;
+  });
 
   useEffect(() => {
     if (props.note.expiredAt) {
@@ -70,13 +75,18 @@ const NoteListItem = (props: Props) => {
     if (props.note.id) await props.onDeleteNote(props.note.id)
   }
 
-   const changeBackground =()=>{
-     setActive(!active);
-    }
+  const changeBackground = () => {
+    setActive(!active);
+    setIsMarkedDone(!isMarkedDone);
+  }
 
-    useEffect(() => {
-      localStorage.setItem(`buttonActive_${props.note.id}`, JSON.stringify(active));
-    }, [active, props.note.id]);
+  useEffect(() => {
+    localStorage.setItem(`buttonActive_${props.note.id}`, JSON.stringify(active));
+  }, [active, props.note.id]);
+
+  useEffect(() => {
+    localStorage.setItem(`buttonMarkedDone_${props.note.id}`, JSON.stringify(isMarkedDone));
+  }, [isMarkedDone, props.note.id]);
 
   return (
     <div style={{ backgroundColor: active ? "#E5F5F4" : '' }} className={`${classes.wrapper} ${statusClassName()}`}>
@@ -108,11 +118,11 @@ const NoteListItem = (props: Props) => {
       </main>
 
       <footer className={classes.footer}>
-        <NoteDate date={props.note.createdAt} prefix="Created" formatString="dd MMM"/>
-        <NoteDate date={props.note.updatedAt} prefix="Update" formatString="dd MMM"/>
+        <NoteDate date={props.note.createdAt} prefix="Created" formatString="dd MMM" />
+        <NoteDate date={props.note.updatedAt} prefix="Update" formatString="dd MMM" />
         <button className={classes.mark} onClick={changeBackground}>
-          <span>Mark as Done </span>
-          <img src={iconCheck} className={classes.markIcon} />
+          <span>{!isMarkedDone ? 'Mark as Done' : ''}</span>
+          <img src={isMarkedDone ? iconCheckActive : iconCheck} className={classes.markIcon} />
         </button>
       </footer>
     </div>

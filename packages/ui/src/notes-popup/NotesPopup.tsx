@@ -16,7 +16,7 @@ type Props = {
 };
 
 export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, onChangeSearchText }: Props) => {
-	const [searchText, setSearchText] = useState('');
+	const [searchText, setSearchText] = useState<string>('');
 	const handleChangeSearchText: ChangeEventHandler<HTMLInputElement> = (e) => {
 		setSearchText(e.target.value);
 		onChangeSearchText(e.target.value);
