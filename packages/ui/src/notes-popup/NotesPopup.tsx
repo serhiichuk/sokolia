@@ -1,4 +1,4 @@
-import React, { useState, ChangeEventHandler } from 'react';
+import { useState, ChangeEventHandler } from 'react';
 import classes from './NotesPopup.module.pcss';
 import iconLoop from '../assets/img/icon-loop-20.svg';
 import iconTrash from '../assets/img/icon-trash-20.svg';
@@ -6,6 +6,7 @@ import iconCheck from '../assets/img/icon-check-20.svg';
 
 import type { NoteEntity } from '@sokolia/domain';
 import NotesList from './NotesList';
+import NoteContentEditor from './NoteContentEditor';
 
 type Props = {
 	notes: NoteEntity[];
@@ -17,10 +18,31 @@ type Props = {
 
 export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, onChangeSearchText }: Props) => {
 	const [searchText, setSearchText] = useState<string>('');
+	const [isCreatingNote, setIsCreatingNote] = useState(false);
+	const [newNoteContent, setNewNoteContent] = useState<string>(''); 
+
 	const handleChangeSearchText: ChangeEventHandler<HTMLInputElement> = (e) => {
 		setSearchText(e.target.value);
 		onChangeSearchText(e.target.value);
 	}
+
+	const startCreatingNote = () => {
+		setIsCreatingNote(true);
+	}
+
+	const cancelCreatingNote = () => {
+		setIsCreatingNote(false);
+		setNewNoteContent('');
+	}
+
+	const saveNote = async () => {
+		if (newNoteContent.trim() !== '') {
+			await onCreateNote({ title: 'test', content: newNoteContent });
+			setIsCreatingNote(false);
+			setNewNoteContent('');
+		}
+	}
+	
 
 	return (
 		<div className={classes.wrapper}>
@@ -45,12 +67,23 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 
 			<main className={classes.notesWrapper}>
 				<div className={classes.createBox}>
-				<div className={classes.createBtn}
-					onClick={() => onCreateNote({title: 'test', content: 'test test'})}
-				></div>
+					{isCreatingNote ? (
+						<div className={classes.createEditor}>
+							<NoteContentEditor
+								content={newNoteContent}
+								onChange={setNewNoteContent}
+							/>
+							<button onClick={cancelCreatingNote}>Cancel</button>
+							<button onClick={saveNote}>Save</button>
+						</div>
+					) : (
+						<div className={classes.createBtn}
+							onClick={startCreatingNote}
+						></div>
+					)}
 				</div>
 				<NotesList
-					notes={notes}
+					notes={isCreatingNote ? [...notes] : notes}
 					onCreateNote={onCreateNote}
 					onUpdateNote={onUpdateNote}
 					onDeleteNote={onDeleteNote}

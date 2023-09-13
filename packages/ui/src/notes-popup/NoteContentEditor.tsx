@@ -4,7 +4,6 @@ import classes from './NoteContentEditor.module.pcss'
 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import ReactMarkdown from 'react-markdown'
 
 import { ClickOutside } from './ClickOutside';
 
@@ -54,13 +53,8 @@ const NoteContentEditor = (props: Props) => {
           value={value}
           onChange={handleChange}
           theme="snow"
-          // onKeyUp={handleKeyUp}
+          onKeyUp={handleKeyUp}
           modules={modules}
-          style={{
-            backgroundColor: '#ffffff',
-            color: '#000000',
-            
-          }}
         />
 
     </ClickOutside>
