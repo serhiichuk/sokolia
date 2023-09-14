@@ -1,12 +1,21 @@
+<<<<<<< HEAD
 import { useState, ChangeEventHandler } from 'react';
+=======
+import type { ChangeEventHandler } from 'react';
+import React, { useState } from 'react';
+>>>>>>> 7775d94a52029efbcd5f58db10479e54e07eafeb
 import classes from './NotesPopup.module.pcss';
 import iconLoop from '../assets/img/icon-loop-20.svg';
 import iconTrash from '../assets/img/icon-trash-20.svg';
 import iconCheck from '../assets/img/icon-check-20.svg';
 
 import type { NoteEntity } from '@sokolia/domain';
+<<<<<<< HEAD
 import NotesList from './NotesList';
 import NoteContentEditor from './NoteContentEditor';
+=======
+import { NotesList } from './NotesList';
+>>>>>>> 7775d94a52029efbcd5f58db10479e54e07eafeb
 
 type Props = {
 	notes: NoteEntity[];
@@ -26,6 +35,7 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 		onChangeSearchText(e.target.value);
 	}
 
+<<<<<<< HEAD
 	const startCreatingNote = () => {
 		setIsCreatingNote(true);
 	}
@@ -44,6 +54,15 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 	}
 	
 
+=======
+	const handleCreateNote = () => {
+		onCreateNote({
+			title: 'test',
+			content: 'test test',
+		}).catch(e => console.error('Failed to create note', e));
+	}
+
+>>>>>>> 7775d94a52029efbcd5f58db10479e54e07eafeb
 	return (
 		<div className={classes.wrapper}>
 			<header className={classes.header}>
@@ -67,6 +86,7 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 
 			<main className={classes.notesWrapper}>
 				<div className={classes.createBox}>
+<<<<<<< HEAD
 					{isCreatingNote ? (
 						<div className={classes.createEditor}>
 							<NoteContentEditor
@@ -81,6 +101,11 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 							onClick={startCreatingNote}
 						></div>
 					)}
+=======
+					<div className={classes.createBtn}
+						onClick={handleCreateNote}
+					></div>
+>>>>>>> 7775d94a52029efbcd5f58db10479e54e07eafeb
 				</div>
 				<NotesList
 					notes={isCreatingNote ? [...notes] : notes}

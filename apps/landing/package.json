@@ -2,7 +2,6 @@
   "name": "@sokolia/landing",
   "version": "1.0.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint:js": "eslint ."
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
