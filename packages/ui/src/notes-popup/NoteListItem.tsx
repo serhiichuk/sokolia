@@ -26,25 +26,12 @@ export type Props = {
 
 const TIME_LEFT_SYNC_INTERVAL = 1000;
 
-<<<<<<< HEAD
-const NoteListItem = (props: Props) => {
-  const [active, setActive] = useState(() => {
-    const storedActive = localStorage.getItem(`buttonActive_${props.note.id}`);
-    return storedActive ? JSON.parse(storedActive) : false;
-  });
-  const [timeLeft, setTimeLeft] = useState<string>(props.note.expiredAt ? formatDistanceToNow(props.note.expiredAt) : '');
-  const [isMarkedDone, setIsMarkedDone] = useState(() => {
-    const storedMarkedDone = localStorage.getItem(`buttonMarkedDone_${props.note.id}`);
-    return storedMarkedDone ? JSON.parse(storedMarkedDone) : false;
-  });
-=======
 export const NotesListItem = (props: Props) => {
 	const [active, setActive] = useState<boolean>(() => {
 		const storedActive = localStorage.getItem(`buttonActive_${props.note.id}`);
 		return storedActive ? JSON.parse(storedActive) as boolean : false;
 	});
 	const [timeLeft, setTimeLeft] = useState<string>(props.note.expiredAt ? formatDistanceToNow(props.note.expiredAt) : '');
->>>>>>> 7775d94a52029efbcd5f58db10479e54e07eafeb
 
 	useEffect(() => {
 		if (props.note.expiredAt) {
@@ -92,20 +79,6 @@ export const NotesListItem = (props: Props) => {
 		}
 	}
 
-<<<<<<< HEAD
-  const changeBackground = () => {
-    setActive(!active);
-    setIsMarkedDone(!isMarkedDone);
-  }
-
-  useEffect(() => {
-    localStorage.setItem(`buttonActive_${props.note.id}`, JSON.stringify(active));
-  }, [active, props.note.id]);
-
-  useEffect(() => {
-    localStorage.setItem(`buttonMarkedDone_${props.note.id}`, JSON.stringify(isMarkedDone));
-  }, [isMarkedDone, props.note.id]);
-=======
 	const changeBackground =()=>{
 		setActive(!active);
 	}
@@ -113,7 +86,6 @@ export const NotesListItem = (props: Props) => {
 	useEffect(() => {
 		localStorage.setItem(`buttonActive_${props.note.id}`, JSON.stringify(active));
 	}, [active, props.note.id]);
->>>>>>> 7775d94a52029efbcd5f58db10479e54e07eafeb
 
 	return (
 		<div style={{ backgroundColor: active ? '#E5F5F4' : '' }} className={`${classes.wrapper} ${statusClassName()}`}>
@@ -144,18 +116,6 @@ export const NotesListItem = (props: Props) => {
 				)}
 			</main>
 
-<<<<<<< HEAD
-      <footer className={classes.footer}>
-        <NoteDate date={props.note.createdAt} prefix="Created" formatString="dd MMM" />
-        <NoteDate date={props.note.updatedAt} prefix="Update" formatString="dd MMM" />
-        <button className={classes.mark} onClick={changeBackground}>
-          <span>{!isMarkedDone ? 'Mark as Done' : ''}</span>
-          <img src={isMarkedDone ? iconCheckActive : iconCheck} className={classes.markIcon} />
-        </button>
-      </footer>
-    </div>
-  );
-=======
 			<footer className={classes.footer}>
 				<NoteDate date={props.note.createdAt} prefix="Created" formatString="dd MMM"/>
 				<NoteDate date={props.note.updatedAt} prefix="Update" formatString="dd MMM"/>
@@ -166,5 +126,4 @@ export const NotesListItem = (props: Props) => {
 			</footer>
 		</div>
 	);
->>>>>>> 7775d94a52029efbcd5f58db10479e54e07eafeb
 };

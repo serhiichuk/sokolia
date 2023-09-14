@@ -48,15 +48,6 @@ export const NoteContentEditor = (props: Props) => {
 	return (
 		<ClickOutside onClickOutside={handleClickOutside}>
 
-<<<<<<< HEAD
-        <ReactQuill
-          value={value}
-          onChange={handleChange}
-          theme="snow"
-          onKeyUp={handleKeyUp}
-          modules={modules}
-        />
-=======
 			<ReactQuill
 				value={value}
 				onChange={handleChange}
@@ -69,7 +60,6 @@ export const NoteContentEditor = (props: Props) => {
             
 				}}
 			/>
->>>>>>> 7775d94a52029efbcd5f58db10479e54e07eafeb
 
 		</ClickOutside>
 	);
