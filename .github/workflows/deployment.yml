@@ -19,6 +19,10 @@ permissions:
   pull-requests: write
   repository-projects: write
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   build:
     name: Build
@@ -90,7 +94,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           folder: ./apps/playground/dist
           force: false
-          clean-exclude: pr-preview/
+          clean-exclude: ./apps/playground/dist/pr-preview
 
   deploy-review:
     name: Deploy/Review
@@ -112,12 +116,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           source-dir: ./apps/playground/dist
-          action: deploy
-
-      - name: Remove on PR close (not merged)
-        if: github.event.action == 'closed' && !github.event.pull_request.merged
-        uses: rossjrw/pr-preview-action@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          source-dir: ./apps/playground/dist
-          action: remove
+          umbrella-dir: ./apps/playground/dist/pr-preview
