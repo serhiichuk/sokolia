@@ -74,17 +74,15 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-            path: ./apps/playground/dist/
-
   deploy-staging:
     name: Deploy/Staging
     runs-on: ubuntu-latest
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged)
     needs: build
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
@@ -97,11 +95,15 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Deploy on PR open/reopen/synchronize
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: ./apps/playground/dist/
           action: deploy
+
       - name: Remove on PR close (not merged)
         if: github.event.action == 'closed' && !github.event.pull_request.merged
         uses: rossjrw/pr-preview-action@v1
