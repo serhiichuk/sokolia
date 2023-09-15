@@ -48,7 +48,7 @@ export const Home = () => {
 
 	return (
 		<div className={classes.wrapper}>
-			<pre className={classes.description}>File: <i>apps/playground/src/pages/Home.tsx TESTESTST</i></pre>
+			<pre className={classes.description}>File: <i>apps/playground/src/pages/Home.tsx</i></pre>
 
 			<div className={classes.popupBody}>
 				<NotesPopup
