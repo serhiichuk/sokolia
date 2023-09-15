@@ -54,11 +54,6 @@ export const NoteContentEditor = (props: Props) => {
 				theme="snow"
 				onKeyUp={handleKeyUp}
 				modules={modules}
-				style={{
-					backgroundColor: '#ffffff',
-					color: '#000000',
-            
-				}}
 			/>
 
 		</ClickOutside>

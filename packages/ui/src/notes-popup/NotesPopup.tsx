@@ -7,6 +7,7 @@ import iconCheck from '../assets/img/icon-check-20.svg';
 
 import type { NoteEntity } from '@sokolia/domain';
 import { NotesList } from './NotesList';
+import { NoteContentEditor } from './NoteContentEditor';
 
 type Props = {
 	notes: NoteEntity[];
@@ -18,26 +19,37 @@ type Props = {
 
 export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, onChangeSearchText }: Props) => {
 	const [searchText, setSearchText] = useState<string>('');
-	const [isCreatingNote, setIsCreatingNote] = useState(false);
-	const [newNoteContent, setNewNoteContent] = useState<string>(''); 
+	const [isCreatingNote, setIsCreatingNote] = useState<boolean>(false);
+	const [newNoteContent, setNewNoteContent] = useState<string>('');
 
 	const handleChangeSearchText: ChangeEventHandler<HTMLInputElement> = (e) => {
 		setSearchText(e.target.value);
 		onChangeSearchText(e.target.value);
 	}
 
-	const handleCreateNote = () => {
-		onCreateNote({
-			title: 'test',
-			content: 'test test',
-		}).catch(e => console.error('Failed to create note', e));
+	const startCreatingNote = () => {
+		setIsCreatingNote(true);
 	}
+
+	const cancelCreatingNote = () => {
+		setIsCreatingNote(false);
+		setNewNoteContent('');
+	}
+
+	const saveNote = async () => {
+		if (newNoteContent.trim() !== '') {
+			await onCreateNote({ title: 'test', content: newNoteContent });
+			setIsCreatingNote(false);
+			setNewNoteContent('');
+		}
+	}
+
 
 	return (
 		<div className={classes.wrapper}>
 			<header className={classes.header}>
 				<div className={classes.searchBlock}>
-					<img src={iconLoop}/>
+					<img src={iconLoop} />
 					<input
 						type="text"
 						value={searchText}
@@ -46,19 +58,30 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 				</div>
 				<div className={classes.actionsBlock}>
 					<div className={classes.action}>
-						<img src={iconCheck}/>
+						<img src={iconCheck} />
 					</div>
 					<div className={classes.action}>
-						<img src={iconTrash}/>
+						<img src={iconTrash} />
 					</div>
 				</div>
 			</header>
 
 			<main className={classes.notesWrapper}>
 				<div className={classes.createBox}>
-					<div className={classes.createBtn}
-						onClick={handleCreateNote}
-					></div>
+					{isCreatingNote ? (
+						<div className={classes.createEditor}>
+							<NoteContentEditor
+								content={newNoteContent}
+								onChange={setNewNoteContent}
+							/>
+							<button onClick={cancelCreatingNote}>Cancel</button>
+							<button onClick={saveNote}>Save</button>
+						</div>
+					) : (
+						<button className={classes.createBtn}
+							onClick={startCreatingNote}
+						></button>
+					)}
 				</div>
 				<NotesList
 					notes={isCreatingNote ? [...notes] : notes}
