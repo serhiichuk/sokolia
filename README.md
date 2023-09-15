@@ -12,6 +12,12 @@ Demo - https://serhiichuk.github.io/sokolia
 
 ## Commands
 
+`pnpm run ling` - Run linter for all packages
+
+`pnpm run type-check` - Run type checks for all packages
+
+`pnpm run precommit` - Run linter and type checks for all packages
+
 ### Playground
 
 `pnpm --filter playground dev` - Start development server for playground

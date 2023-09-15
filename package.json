@@ -6,6 +6,7 @@
   "packageManager": "pnpm@7.27.0",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
+    "precommit": "pnpm run lint && pnpm run type-check",
     "lint-eslint": "eslint . --ext js,jsx,ts,tsx",
     "lint": "pnpm run lint-eslint",
     "type-check": "tsc --noEmit -p tsconfig.json"
