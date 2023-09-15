@@ -56,14 +56,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-#      - name: Lint code
-#        run: pnpm run lint
-#
-#      - name: Type check
-#        run: pnpm run type-check
-#
-#      - name: Build
-#        run: pnpm --filter playground build
+      - name: Lint code
+        run: pnpm run lint
+
+      - name: Type check
+        run: pnpm run type-check
+
+      - name: Build Playground
+        run: pnpm --filter playground build
+
       - name: Upload build files
         uses: actions/upload-artifact@v3
         with:
@@ -84,7 +85,6 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           folder: ./apps/playground/dist
           force: false
           clean-exclude: pr-preview/
