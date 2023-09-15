@@ -64,8 +64,11 @@ jobs:
 #
 #      - name: Build
 #        run: pnpm --filter playground build
-      - run: |
-          ls -la
+      - name: Upload build files
+        uses: actions/upload-artifact@v3
+        with:
+          name: playground/dist
+          path: ./apps/playground/dist
 
   deploy-staging:
     name: Deploy/Staging
@@ -73,8 +76,11 @@ jobs:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged)
     needs: build
     steps:
-      - run: |
-          ls -la
+      - name: Download build files
+        uses: actions/download-artifact@v2
+        with:
+          name: playground/dist
+          path: ./apps/playground/dist
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
@@ -88,6 +94,11 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     steps:
+      - name: Download build files
+        uses: actions/download-artifact@v2
+        with:
+          name: playground/dist
+          path: ./apps/playground/dist
       - name: Deploy on PR open/reopen/synchronize
         uses: rossjrw/pr-preview-action@v1
         with:
