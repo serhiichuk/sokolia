@@ -74,6 +74,9 @@ jobs:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged)
     needs: build
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Download build files
         uses: actions/download-artifact@v2
         with:
@@ -92,6 +95,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Download build files
         uses: actions/download-artifact@v2
         with:
