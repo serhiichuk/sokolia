@@ -89,7 +89,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          folder: ./apps/playground/dist
+          folder: apps/playground/dist
           force: false
           clean-exclude: pr-preview/
 
@@ -101,12 +101,12 @@ jobs:
       - name: Deploy on PR open/reopen/synchronize
         uses: rossjrw/pr-preview-action@v1
         with:
-          source-dir: ./apps/playground/dist
+          source-dir: apps/playground/dist
           action: deploy
 
       - name: Remove on PR close (not merged)
         if: github.event.action == 'closed' && !github.event.pull_request.merged
         uses: rossjrw/pr-preview-action@v1
         with:
-          source-dir: ./apps/playground/dist
+          source-dir: apps/playground/dist
           action: remove
