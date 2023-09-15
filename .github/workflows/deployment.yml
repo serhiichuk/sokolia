@@ -80,9 +80,11 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           path: ./apps/playground/dist
+
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           folder: ./apps/playground/dist
           force: false
           clean-exclude: pr-preview/
@@ -96,9 +98,12 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           path: ./apps/playground/dist
+
       - name: Deploy on PR open/reopen/synchronize
+        if: github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize'
         uses: rossjrw/pr-preview-action@v1
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           source-dir: ./apps/playground/dist
           action: deploy
 
@@ -106,5 +111,6 @@ jobs:
         if: github.event.action == 'closed' && !github.event.pull_request.merged
         uses: rossjrw/pr-preview-action@v1
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           source-dir: ./apps/playground/dist
           action: remove
