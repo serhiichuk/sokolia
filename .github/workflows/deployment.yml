@@ -71,6 +71,14 @@ jobs:
       - name: Build
         run: pnpm --filter playground build
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+            path: ./apps/playground/dist/
+
   deploy-staging:
     name: Deploy/Staging
     runs-on: ubuntu-latest
@@ -80,7 +88,7 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ./apps/playground/dist
+          folder: ./apps/playground/dist/
           force: false
           clean-exclude: pr-preview/
 
@@ -92,11 +100,11 @@ jobs:
       - name: Deploy on PR open/reopen/synchronize
         uses: rossjrw/pr-preview-action@v1
         with:
-          source-dir: ./apps/playground/dist
+          source-dir: ./apps/playground/dist/
           action: deploy
       - name: Remove on PR close (not merged)
         if: github.event.action == 'closed' && !github.event.pull_request.merged
         uses: rossjrw/pr-preview-action@v1
         with:
-          source-dir: ./apps/playground/dist
+          source-dir: ./apps/playground/dist/
           action: remove
