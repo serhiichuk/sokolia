@@ -42,7 +42,7 @@ export const Home = () => {
 	}
 
 	const onDeleteNote = async (id: NoteEntity['id']) => {
-		await notesRepo.delete(id);
+		await notesRepo.delete({});
 		syncNotes();
 	}
 
