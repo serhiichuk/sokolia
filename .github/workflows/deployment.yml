@@ -72,12 +72,13 @@ jobs:
   deploy-staging:
     name: Deploy/Staging
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged)
     needs: build
     steps:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ./apps/playground/dist/
+          folder: ./apps/playground/dist
           force: false
           clean-exclude: pr-preview/
 
@@ -89,11 +90,11 @@ jobs:
       - name: Deploy on PR open/reopen/synchronize
         uses: rossjrw/pr-preview-action@v1
         with:
-          source-dir: ./apps/playground/dist/
+          source-dir: ./apps/playground/dist
           action: deploy
       - name: Remove on PR close (not merged)
         if: github.event.action == 'closed' && !github.event.pull_request.merged
         uses: rossjrw/pr-preview-action@v1
         with:
-          source-dir: ./apps/playground/dist/
+          source-dir: ./apps/playground/dist
           action: remove
