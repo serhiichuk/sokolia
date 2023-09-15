@@ -84,14 +84,16 @@ jobs:
   deploy-review:
     name: Deploy/Review
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
     steps:
-      - uses: rossjrw/pr-preview-action@v1
-        if: contains(['opened', 'reopened', 'synchronize'], github.event.action)
+      - name: Deploy on PR open/reopen/synchronize
+        uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: ./apps/playground/dist/
           action: deploy
-      - uses: rossjrw/pr-preview-action@v1
-        if: github.event.action == "closed" && !github.event.pull_request.merged
+      - name: Remove on PR close (not merged)
+        if: github.event.action == 'closed' && !github.event.pull_request.merged
+        uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: ./apps/playground/dist/
           action: remove
