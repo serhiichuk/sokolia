@@ -1,4 +1,4 @@
-name: Deployment
+name: Deploy Playground to Pages
 
 on:
   push:
@@ -15,19 +15,21 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
-  pull-requests: write
-  repository-projects: write
+  contents: read
   pages: write
   id-token: write
 
+# Allow one concurrent deployment
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: false
+  group: 'pages'
+  cancel-in-progress: true
 
 jobs:
-  build:
-    name: Build
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -68,54 +70,19 @@ jobs:
       - name: Type check
         run: pnpm run type-check
 
-      - name: Build Playground
+      - name: Build
         run: pnpm --filter playground build
 
-      - name: Upload build files
-        uses: actions/upload-artifact@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          path: ./apps/playground/dist
+          path: './apps/playground/dist'
 
-  deploy-staging:
-    name: Deploy/Staging
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged)
-    needs: build
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Download build files
-        uses: actions/download-artifact@v2
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
         with:
-          path: ./apps/playground/dist
-
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          folder: ./apps/playground/dist
-          force: false
-          clean-exclude: ./apps/playground/dist/pr-preview
-
-  deploy-review:
-    name: Deploy/Review
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    needs: build
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Download build files
-        uses: actions/download-artifact@v2
-        with:
-          path: ./apps/playground/dist
-
-      - name: Deploy on PR open/reopen/synchronize
-        if: github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize'
-        uses: rossjrw/pr-preview-action@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          source-dir: ./apps/playground/dist
-          umbrella-dir: ./apps/playground/dist/pr-preview
+          preview: true
