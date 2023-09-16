@@ -19,7 +19,7 @@ permissions:
   pull-requests: write
   repository-projects: write
   pages: write
-  id-token: read
+  id-token: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
