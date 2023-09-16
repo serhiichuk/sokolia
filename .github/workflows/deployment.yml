@@ -18,6 +18,8 @@ permissions:
   contents: write
   pull-requests: write
   repository-projects: write
+  pages: write
+  id-token: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
