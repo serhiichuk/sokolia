@@ -84,7 +84,7 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 					)}
 				</div>
 				<NotesList
-					notes={isCreatingNote ? [...notes] : notes}
+					notes={notes}
 					onCreateNote={onCreateNote}
 					onUpdateNote={onUpdateNote}
 					onDeleteNote={onDeleteNote}

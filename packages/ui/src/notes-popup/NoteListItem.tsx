@@ -28,7 +28,10 @@ const TIME_LEFT_SYNC_INTERVAL = 1000;
 
 export const NotesListItem = (props: Props) => {
 	const [timeLeft, setTimeLeft] = useState<string>(props.note.expiredAt ? formatDistanceToNow(props.note.expiredAt) : '');
-	const [isMarkedDone, setIsMarkedDone] = useState<boolean>(false);
+
+	const [isMarkedDone, setIsMarkedDone] = useState<boolean>(
+		props.note.status === 'done'
+	);
 
 	useEffect(() => {
 		if (props.note.expiredAt) {
@@ -52,13 +55,10 @@ export const NotesListItem = (props: Props) => {
 
 	const handleChangeNoteContent = async (content: string) => {
 		props.onChangeMode('view');
-
 		if (props.note.id) {
 			await props.onUpdateNote({ id: props.note.id, content });
 		} else {
-			const newNote = await props.onCreateNote({ content });
 			setIsMarkedDone(false);
-			setTimeLeft(formatDistanceToNow(newNote.expiredAt as number));
 		}
 	}
 
@@ -74,10 +74,9 @@ export const NotesListItem = (props: Props) => {
 		}
 	}
 
-	const changeBackground = async () => {
+	const onClickDone = async () => {
 		const updatedIsMarkedDone = !isMarkedDone;
 		setIsMarkedDone(updatedIsMarkedDone);
-
 		if (props.note.id) {
 			const newStatus = updatedIsMarkedDone ? 'done' : 'draft';
 			await props.onUpdateNote({
@@ -88,7 +87,7 @@ export const NotesListItem = (props: Props) => {
 	}
 
 	return (
-		<div style={{ backgroundColor: isMarkedDone ? "done" : '' }} className={`${classes.wrapper} ${statusClassName()}`}>
+		<div className={`${classes.wrapper} ${statusClassName()}`}>
 			<header className={classes.header}>
 				<div className={classes.dateWrapper}>
 					<span className={classes.dateValue}>{timeLeft}</span>
@@ -119,7 +118,7 @@ export const NotesListItem = (props: Props) => {
 			<footer className={classes.footer}>
 				<NoteDate date={props.note.createdAt} prefix="Created" formatString="dd MMM" />
 				<NoteDate date={props.note.updatedAt} prefix="Update" formatString="dd MMM" />
-				<button className={classes.mark} onClick={changeBackground}
+				<button className={classes.mark} onClick={onClickDone}
 				>
 					<span>{!isMarkedDone ? 'Mark as Done' : ''}</span>
 					<img src={isMarkedDone ? iconCheckActive : iconCheck} className={classes.markIcon} />
