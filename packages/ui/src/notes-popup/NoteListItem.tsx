@@ -29,10 +29,6 @@ const TIME_LEFT_SYNC_INTERVAL = 1000;
 export const NotesListItem = (props: Props) => {
 	const [timeLeft, setTimeLeft] = useState<string>(props.note.expiredAt ? formatDistanceToNow(props.note.expiredAt) : '');
 
-	const [isMarkedDone, setIsMarkedDone] = useState<boolean>(
-		props.note.status === 'done'
-	);
-
 	useEffect(() => {
 		if (props.note.expiredAt) {
 			const timeLeftTimer = setInterval(() => {
@@ -57,8 +53,6 @@ export const NotesListItem = (props: Props) => {
 		props.onChangeMode('view');
 		if (props.note.id) {
 			await props.onUpdateNote({ id: props.note.id, content });
-		} else {
-			setIsMarkedDone(false);
 		}
 	}
 
@@ -75,10 +69,8 @@ export const NotesListItem = (props: Props) => {
 	}
 
 	const onClickDone = async () => {
-		const updatedIsMarkedDone = !isMarkedDone;
-		setIsMarkedDone(updatedIsMarkedDone);
 		if (props.note.id) {
-			const newStatus = updatedIsMarkedDone ? 'done' : 'draft';
+			const newStatus = props.note.status === 'done' ? 'draft' : 'done';
 			await props.onUpdateNote({
 				id: props.note.id,
 				status: newStatus,
@@ -120,8 +112,8 @@ export const NotesListItem = (props: Props) => {
 				<NoteDate date={props.note.updatedAt} prefix="Update" formatString="dd MMM" />
 				<button className={classes.mark} onClick={onClickDone}
 				>
-					<span>{!isMarkedDone ? 'Mark as Done' : ''}</span>
-					<img src={isMarkedDone ? iconCheckActive : iconCheck} className={classes.markIcon} />
+					<span>{props.note.status === 'done' ? '' : 'Mark as Done'}</span>
+					<img src={props.note.status === 'done' ? iconCheckActive : iconCheck} className={classes.markIcon} />
 				</button>
 			</footer>
 		</div>

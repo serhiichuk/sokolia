@@ -4,6 +4,7 @@ import classes from './NotesPopup.module.pcss';
 import iconLoop from '../assets/img/icon-loop-20.svg';
 import iconTrash from '../assets/img/icon-trash-20.svg';
 import iconCheck from '../assets/img/icon-check-20.svg';
+import iconDoge from '../assets/img/icon-doge.svg';
 
 import type { NoteEntity } from '@sokolia/domain';
 import { NotesList } from './NotesList';
@@ -21,6 +22,7 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 	const [searchText, setSearchText] = useState<string>('');
 	const [isCreatingNote, setIsCreatingNote] = useState<boolean>(false);
 	const [newNoteContent, setNewNoteContent] = useState<string>('');
+	const [isEditorVisible, setIsEditorVisible] = useState<boolean>(false);
 
 	const handleChangeSearchText: ChangeEventHandler<HTMLInputElement> = (e) => {
 		setSearchText(e.target.value);
@@ -29,11 +31,13 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 
 	const startCreatingNote = () => {
 		setIsCreatingNote(true);
+		setIsEditorVisible(true);
 	}
 
 	const cancelCreatingNote = () => {
 		setIsCreatingNote(false);
 		setNewNoteContent('');
+		setIsEditorVisible(false);
 	}
 
 	const saveNote = async () => {
@@ -41,6 +45,7 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 			await onCreateNote({ title: 'test', content: newNoteContent });
 			setIsCreatingNote(false);
 			setNewNoteContent('');
+			setIsEditorVisible(false);
 		}
 	}
 
@@ -83,12 +88,23 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 						></button>
 					)}
 				</div>
-				<NotesList
-					notes={notes}
-					onCreateNote={onCreateNote}
-					onUpdateNote={onUpdateNote}
-					onDeleteNote={onDeleteNote}
-				/>
+				{!isEditorVisible && notes.length === 0 ? (
+					<div className={classes.noNotesBlock}>
+						<div className={classes.noNotesBlockContent}>
+							<img src={iconDoge} />
+							<p className={classes.noNotesText}>
+								No <span>notes</span> yet
+							</p>
+						</div>
+					</div>
+				) : (
+					<NotesList
+						notes={notes}
+						onCreateNote={onCreateNote}
+						onUpdateNote={onUpdateNote}
+						onDeleteNote={onDeleteNote}
+					/>
+				)}
 			</main>
 		</div>
 	);
