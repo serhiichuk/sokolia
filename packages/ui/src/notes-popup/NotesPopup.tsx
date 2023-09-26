@@ -40,15 +40,17 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 		setIsEditorVisible(false);
 	}
 
-	const saveNote = async () => {
+	const saveNote = () => {
 		if (newNoteContent.trim() !== '') {
-			await onCreateNote({ title: 'test', content: newNoteContent });
-			setIsCreatingNote(false);
-			setNewNoteContent('');
-			setIsEditorVisible(false);
+			onCreateNote({ title: 'test', content: newNoteContent }).then(() => {
+				setIsCreatingNote(false);
+				setNewNoteContent('');
+				setIsEditorVisible(false);
+			}).catch(e => {
+				console.error('Failed to create note', e);
+			})
 		}
 	}
-
 
 	return (
 		<div className={classes.wrapper}>

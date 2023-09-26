@@ -49,10 +49,12 @@ export const NotesListItem = (props: Props) => {
 		}
 	}
 
-	const handleChangeNoteContent = async (content: string) => {
+	const handleChangeNoteContent = (content: string) => {
 		props.onChangeMode('view');
 		if (props.note.id) {
-			await props.onUpdateNote({ id: props.note.id, content });
+			props.onUpdateNote({ id: props.note.id, content }).catch(e => {
+				console.error('Failed to update note', e);
+			})
 		}
 	}
 
@@ -68,12 +70,14 @@ export const NotesListItem = (props: Props) => {
 		}
 	}
 
-	const onClickDone = async () => {
+	const onClickDone = () => {
 		if (props.note.id) {
 			const newStatus = props.note.status === 'done' ? 'draft' : 'done';
-			await props.onUpdateNote({
+			props.onUpdateNote({
 				id: props.note.id,
 				status: newStatus,
+			}).catch(e => {
+				console.error('Failed to update note', e);
 			});
 		}
 	}
