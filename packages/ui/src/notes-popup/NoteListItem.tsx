@@ -3,6 +3,7 @@ import classes from './NoteListItem.module.pcss';
 import iconPen12 from '../assets/img/icon-pen-12.svg';
 import iconTrash12 from '../assets/img/icon-trash-12.svg';
 import iconCheck from '../assets/img/icon-check-green.svg';
+import iconCheckActive from '../assets/img/icon-check-green-active.svg';
 
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
@@ -26,10 +27,6 @@ export type Props = {
 const TIME_LEFT_SYNC_INTERVAL = 1000;
 
 export const NotesListItem = (props: Props) => {
-	const [active, setActive] = useState<boolean>(() => {
-		const storedActive = localStorage.getItem(`buttonActive_${props.note.id}`);
-		return storedActive ? JSON.parse(storedActive) as boolean : false;
-	});
 	const [timeLeft, setTimeLeft] = useState<string>(props.note.expiredAt ? formatDistanceToNow(props.note.expiredAt) : '');
 
 	useEffect(() => {
@@ -52,17 +49,10 @@ export const NotesListItem = (props: Props) => {
 		}
 	}
 
-	const handleChangeNoteContent =  (content: string) => {
+	const handleChangeNoteContent = async (content: string) => {
 		props.onChangeMode('view');
-
 		if (props.note.id) {
-			props.onUpdateNote({ id: props.note.id, content }).catch(e => {
-				console.error('Failed to update note', e);
-			});
-		} else {
-			props.onCreateNote({ content }).catch(e => {
-				console.error('Failed to create note', e);
-			})
+			await props.onUpdateNote({ id: props.note.id, content });
 		}
 	}
 
@@ -78,16 +68,18 @@ export const NotesListItem = (props: Props) => {
 		}
 	}
 
-	const changeBackground =()=>{
-		setActive(!active);
+	const onClickDone = async () => {
+		if (props.note.id) {
+			const newStatus = props.note.status === 'done' ? 'draft' : 'done';
+			await props.onUpdateNote({
+				id: props.note.id,
+				status: newStatus,
+			});
+		}
 	}
 
-	useEffect(() => {
-		localStorage.setItem(`buttonActive_${props.note.id}`, JSON.stringify(active));
-	}, [active, props.note.id]);
-
 	return (
-		<div style={{ backgroundColor: active ? '#E5F5F4' : '' }} className={`${classes.wrapper} ${statusClassName()}`}>
+		<div className={`${classes.wrapper} ${statusClassName()}`}>
 			<header className={classes.header}>
 				<div className={classes.dateWrapper}>
 					<span className={classes.dateValue}>{timeLeft}</span>
@@ -116,11 +108,12 @@ export const NotesListItem = (props: Props) => {
 			</main>
 
 			<footer className={classes.footer}>
-				<NoteDate date={props.note.createdAt} prefix="Created" formatString="dd MMM"/>
-				<NoteDate date={props.note.updatedAt} prefix="Update" formatString="dd MMM"/>
-				<button className={classes.mark} onClick={changeBackground}>
-					<span>Mark as Done </span>
-					<img src={iconCheck} className={classes.markIcon} />
+				<NoteDate date={props.note.createdAt} prefix="Created" formatString="dd MMM" />
+				<NoteDate date={props.note.updatedAt} prefix="Update" formatString="dd MMM" />
+				<button className={classes.mark} onClick={onClickDone}
+				>
+					<span>{props.note.status === 'done' ? '' : 'Mark as Done'}</span>
+					<img src={props.note.status === 'done' ? iconCheckActive : iconCheck} className={classes.markIcon} />
 				</button>
 			</footer>
 		</div>
