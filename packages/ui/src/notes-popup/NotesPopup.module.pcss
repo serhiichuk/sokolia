@@ -1,3 +1,9 @@
+:root {
+    --header-bg-done: #7FCCC6;
+    --header-bg-deleted: #A8A8A8;
+    --header-bg-default: #FBBC05
+  }
+
 .wrapper {
     width: 600px;
     min-height: 800px;
@@ -13,14 +19,22 @@
 }
 
 .header {
+    background-color: var(--header-bg-default);
     height: 30px;
-    background-color: #FBBC05;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding: 0 30px;
-}
+  }
+  
+  .header-done {
+    background-color: var(--header-bg-done);
+  }
+  
+  .header-deleted {
+    background-color: var(--header-bg-deleted);
+  }
 
 .header .actions-block {
     display: flex;

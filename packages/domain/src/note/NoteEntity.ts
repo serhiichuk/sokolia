@@ -8,6 +8,7 @@ export interface NoteEntity extends Entity {
 	expiredAt?: number
 	status: 'draft' | 'created' | 'expired' | 'done' | 'deleted'
 	content: string
+	imgContent: string
 }
 
 export interface NotesRepository extends Repository<NoteEntity> {

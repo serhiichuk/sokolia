@@ -9,6 +9,7 @@ import iconDoge from '../assets/img/icon-doge.svg';
 import type { NoteEntity } from '@sokolia/domain';
 import { NotesList } from './NotesList';
 import { NoteContentEditor } from './NoteContentEditor';
+import { NotesDone } from './NotesDone';
 
 type Props = {
 	notes: NoteEntity[];
@@ -50,7 +51,7 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 				console.error('Failed to create note', e);
 			})
 		}
-	}
+	};
 
 	return (
 		<div className={classes.wrapper}>
@@ -65,7 +66,7 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 				</div>
 				<div className={classes.actionsBlock}>
 					<div className={classes.action}>
-						<img src={iconCheck} />
+						<img src={iconCheck}/>
 					</div>
 					<div className={classes.action}>
 						<img src={iconTrash} />
@@ -85,9 +86,7 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 							<button onClick={saveNote}>Save</button>
 						</div>
 					) : (
-						<button className={classes.createBtn}
-							onClick={startCreatingNote}
-						></button>
+						<button className={classes.createBtn} onClick={startCreatingNote}></button>
 					)}
 				</div>
 				{!isEditorVisible && notes.length === 0 ? (
