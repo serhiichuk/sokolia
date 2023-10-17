@@ -5,11 +5,11 @@ import iconLoop from '../assets/img/icon-loop-20.svg';
 import iconTrash from '../assets/img/icon-trash-20.svg';
 import iconCheck from '../assets/img/icon-check-20.svg';
 import iconDoge from '../assets/img/icon-doge.svg';
+import iconHome from '../assets/img/icon-home-20.svg';
 
 import type { NoteEntity } from '@sokolia/domain';
 import { NotesList } from './NotesList';
 import { NoteContentEditor } from './NoteContentEditor';
-import { NotesDone } from './NotesDone';
 
 type Props = {
 	notes: NoteEntity[];
@@ -24,6 +24,7 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 	const [isCreatingNote, setIsCreatingNote] = useState<boolean>(false);
 	const [newNoteContent, setNewNoteContent] = useState<string>('');
 	const [isEditorVisible, setIsEditorVisible] = useState<boolean>(false);
+	const [filterType, setFilterType] = useState<'all' | 'done' | 'deleted'>('all');
 
 	const handleChangeSearchText: ChangeEventHandler<HTMLInputElement> = (e) => {
 		setSearchText(e.target.value);
@@ -53,9 +54,30 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 		}
 	};
 
+	const handleIconCheckClick = () => {
+		setFilterType('done');
+	};
+
+	const handleIconTrashClick = () => {
+		setFilterType('deleted');
+	};
+
+	const handleIconHomeClick = () => {
+		setFilterType('all');
+	};
+
+	const getFilteredNotes = () => {
+		if (filterType === 'done') {
+			return notes.filter(note => note.status === 'done');
+		} else if (filterType === 'deleted') {
+			return notes.filter(note => note.status === 'deleted');
+		}
+		return notes.filter(note => note.status !== 'done');
+	};
+
 	return (
 		<div className={classes.wrapper}>
-			<header className={classes.header}>
+			<header className={classes.header} style={{ backgroundColor: filterType === 'done' ? '#7FCCC6' : filterType === 'deleted' ? '#A8A8A8' : '' }}>
 				<div className={classes.searchBlock}>
 					<img src={iconLoop} />
 					<input
@@ -66,10 +88,13 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 				</div>
 				<div className={classes.actionsBlock}>
 					<div className={classes.action}>
-						<img src={iconCheck}/>
+						<img src={iconHome} onClick={handleIconHomeClick} />
 					</div>
 					<div className={classes.action}>
-						<img src={iconTrash} />
+						<img src={iconCheck} onClick={handleIconCheckClick} />
+					</div>
+					<div className={classes.action} >
+						<img src={iconTrash} onClick={handleIconTrashClick} />
 					</div>
 				</div>
 			</header>
@@ -89,7 +114,7 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 						<button className={classes.createBtn} onClick={startCreatingNote}></button>
 					)}
 				</div>
-				{!isEditorVisible && notes.length === 0 ? (
+				{!isEditorVisible && getFilteredNotes().length === 0 ? (
 					<div className={classes.noNotesBlock}>
 						<div className={classes.noNotesBlockContent}>
 							<img src={iconDoge} />
@@ -100,7 +125,7 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 					</div>
 				) : (
 					<NotesList
-						notes={notes}
+						notes={getFilteredNotes()}
 						onCreateNote={onCreateNote}
 						onUpdateNote={onUpdateNote}
 						onDeleteNote={onDeleteNote}
