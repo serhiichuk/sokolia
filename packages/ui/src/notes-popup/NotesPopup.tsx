@@ -1,10 +1,15 @@
 import type { ChangeEventHandler } from 'react';
 import React, { useState } from 'react';
 import classes from './NotesPopup.module.pcss';
+
 import iconLoop from '../assets/img/icon-loop-20.svg';
 import iconTrash from '../assets/img/icon-trash-20.svg';
+import iconTrashActive from '../assets/img/icon-thrash-active.svg';
 import iconCheck from '../assets/img/icon-check-20.svg';
 import iconDoge from '../assets/img/icon-doge.svg';
+import iconHomeDone from '../assets/img/icon-shape.svg';
+import iconHeart from '../assets/img/icon-heart.svg';
+import iconDoneActive from '../assets/img/icon-done-active.svg';
 
 import type { NoteEntity } from '@sokolia/domain';
 import { NotesList } from './NotesList';
@@ -23,6 +28,8 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 	const [isCreatingNote, setIsCreatingNote] = useState<boolean>(false);
 	const [newNoteContent, setNewNoteContent] = useState<string>('');
 	const [isEditorVisible, setIsEditorVisible] = useState<boolean>(false);
+	const [filterType, setFilterType] = useState<string>('all');
+	const [activeLoop, setActiveLoop] = useState<boolean>(false);
 
 	const handleChangeSearchText: ChangeEventHandler<HTMLInputElement> = (e) => {
 		setSearchText(e.target.value);
@@ -50,64 +57,156 @@ export const NotesPopup = ({ notes, onCreateNote, onUpdateNote, onDeleteNote, on
 				console.error('Failed to create note', e);
 			})
 		}
+	};
+
+	const toggleSearchInput = () => {
+		setActiveLoop(!activeLoop);
 	}
+
+	const handleIconCheckClick = () => {
+		setFilterType('done');
+	};
+
+	const handleIconTrashClick = () => {
+		setFilterType('deleted');
+	};
+
+	const handleIconHomeClick = () => {
+		setFilterType('draft');
+	};
+
+	const getFilteredNotes = () => {
+		if (filterType === 'done') {
+			return notes.filter(note => note.status === 'done');
+		} else if (filterType === 'deleted') {
+			return notes.filter(note => note.status === 'deleted');
+		}
+		return notes.filter(note => note.status !== 'done');
+	};
+
+
 
 	return (
 		<div className={classes.wrapper}>
-			<header className={classes.header}>
+			<header className={classes.header} style={{ backgroundColor: filterType === 'done' ? '#7FCCC6' : filterType === 'deleted' ? '#A8A8A8' : '' }}>
 				<div className={classes.searchBlock}>
-					<img src={iconLoop} />
-					<input
-						type="text"
-						value={searchText}
-						onChange={handleChangeSearchText}
+					<img
+						src={iconLoop}
+						onClick={toggleSearchInput}
+						className={activeLoop ? classes.activeLoop : ''}
 					/>
+					{activeLoop ? (
+						<input
+							className={`${classes.searchInput} ${classes.activeSearchInput}`}
+							type="text"
+							value={searchText}
+							onChange={handleChangeSearchText}
+						/>
+					) : null}
 				</div>
-				<div className={classes.actionsBlock}>
-					<div className={classes.action}>
-						<img src={iconCheck} />
+				{filterType === 'done' ? (
+					<div className={classes.actionsBlock}>
+						<div className={classes.action}>
+							<img src={iconDoneActive} onClick={handleIconCheckClick} />
+						</div>
+						<div className={classes.action} >
+							<img src={iconTrash} onClick={handleIconTrashClick} />
+						</div>
 					</div>
-					<div className={classes.action}>
-						<img src={iconTrash} />
+				) : filterType === 'deleted' ? (
+					<div className={classes.actionsBlock}>
+						<div className={classes.action}>
+							<img src={iconCheck} onClick={handleIconCheckClick} />
+						</div>
+						<div className={classes.action} >
+							<img src={iconTrashActive} onClick={handleIconTrashClick} />
+						</div>
 					</div>
-				</div>
+				) : (
+					<div className={classes.actionsBlock}>
+						<div className={classes.action}>
+							<img src={iconCheck} onClick={handleIconCheckClick} />
+						</div>
+						<div className={classes.action} >
+							<img src={iconTrash} onClick={handleIconTrashClick} />
+						</div>
+					</div>
+				)}
 			</header>
 
 			<main className={classes.notesWrapper}>
 				<div className={classes.createBox}>
-					{isCreatingNote ? (
-						<div className={classes.createEditor}>
-							<NoteContentEditor
-								content={newNoteContent}
-								onChange={setNewNoteContent}
-							/>
-							<button onClick={cancelCreatingNote}>Cancel</button>
-							<button onClick={saveNote}>Save</button>
-						</div>
+					{filterType === 'done' ? (
+						<button className={classes.btnDoneBlock} onClick={handleIconHomeClick}>
+							<img className={classes.btnDone} src={iconHomeDone} />
+						</button>
+					) : filterType === 'deleted' ? (
+						<button className={classes.btnDoneBlock} onClick={handleIconHomeClick}>
+							<img className={classes.btnDone} src={iconHomeDone} />
+						</button>
 					) : (
-						<button className={classes.createBtn}
-							onClick={startCreatingNote}
-						></button>
+						isCreatingNote ? (
+							<div className={classes.createEditor}>
+								<NoteContentEditor
+									content={newNoteContent}
+									onChange={setNewNoteContent}
+								/>
+								<button onClick={cancelCreatingNote}>Cancel</button>
+								<button onClick={saveNote}>Save</button>
+							</div>
+						) : (
+							<button className={classes.createBtn} onClick={startCreatingNote}></button>
+						)
 					)}
+
 				</div>
-				{!isEditorVisible && notes.length === 0 ? (
+				{!isEditorVisible && getFilteredNotes().length === 0 ? (
 					<div className={classes.noNotesBlock}>
-						<div className={classes.noNotesBlockContent}>
-							<img src={iconDoge} />
-							<p className={classes.noNotesText}>
-								No <span>notes</span> yet
-							</p>
-						</div>
+						{filterType === 'done' ? (
+							<div className={classes.noNotesBlockContent}>
+								<p className={classes.noNotesText}>
+									No done tasks yet
+								</p>
+							</div>
+						) : filterType === 'deleted' ? (
+							<div className={classes.noNotesBlockContent}>
+								<p className={classes.noNotesText}>
+									No delete tasks here
+								</p>
+							</div>
+						) : (
+							<div className={classes.noNotesBlockContent}>
+								<img src={iconDoge} />
+								<p className={classes.noNotesText}>
+									No <span>notes</span> yet
+								</p>
+							</div>
+						)}
 					</div>
 				) : (
 					<NotesList
-						notes={notes}
+						notes={getFilteredNotes()}
 						onCreateNote={onCreateNote}
 						onUpdateNote={onUpdateNote}
 						onDeleteNote={onDeleteNote}
 					/>
 				)}
 			</main>
+			{filterType === 'deleted' ? (
+				null
+			) : (
+				<footer className={classes.footerContainer}>
+					<div className={classes.footerContent}>
+						<p>
+							Enjoying this app?{' '}
+							<span>Support us{' '}</span>
+							to make it even better
+							<img className={classes.footerIcon} src={iconHeart} alt='love' />
+						</p>
+
+					</div>
+				</footer>
+			)}
 		</div>
 	);
 };
